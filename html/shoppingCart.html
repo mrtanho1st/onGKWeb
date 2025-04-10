@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo chí - Sài gòn News</title>
+    <title>Báo Hà Nội Mới</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../css/magazine.css">
+    <link rel="stylesheet" href="../css/shoppingCart.css">
 </head>
 <body>
     <div class="wrapper">
@@ -165,6 +165,7 @@
                     }
                 };
             </script>
+
             <nav class="navbar navbar-expand-sm navbar-dark">
                 <a class="navbar-brand" href="../html/home.html"><img src="../img/logo.png" alt=""></a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -205,200 +206,157 @@
             </div>
             <div class="content">
                 <div class="content-title">
-                    <h2>DANH SÁCH BÁO CHÍ</h2>
+                    <h2>Giỏ hàng của bạn</h2>
                     <img src="../img/item1.png">
                 </div>
                 <div class="content-represent">
-                    <div class="row1">
-                        <div class="row1-content">
-                            <div class="introduce">
-                                <h5>Giới thiệu</h5>
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                      <a class="nav-link active" href="introduce.html">Về chúng tôi</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Chính sách thanh toán</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Chính sách đổi trả</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Chính sách vận chuyển</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Chính sách bảo hành</a>
-                                      </li>
-                                    <br>
-                                </ul>
-                            </div>
-                            <div class="produce">
-                                <h5>Sản phẩm</h5>
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../html/news.html">Báo chí</a>
-                                      </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link active" href="../html/magazine.html">Tạp chí</a>
-                                    </li>
-                                    <br>
-                                </ul>
-                            </div>
-                            <div class="filter">
-                                <h5>Lọc theo nhà xuất bản</h5>
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                      <a class="nav-link active" href="#">Doanh nhân</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Công an nhân dân</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Nhân dân</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#">Công lý</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Gia đình</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Kinh tế & Đô thị</a>
-                                      </li>
-                                </ul>
+                    <body onload="showCart()">
+                        <div id="cart-list"></div>
+                        <div id="order-message" style="margin-top: 10px; color: green;"></div>
+                    </body>              
+                </div>
+            </div>
+            <div class="form-order">
+                <button type="button" class="btn btn-secondary" onclick="orderCart()">Đặt hàng</button>                 
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="order-modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Điền thông tin cá nhân</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="Nhập họ tên">
+                                        <div id="nameError" class="form-text text-danger"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="address" id="address" placeholder="Nhập địa chỉ">
+                                        <div id="addressError" class="form-text text-danger"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="numphone" id="numphone" placeholder="Nhập số điện thoại">
+                                        <div id="numphoneError" class="form-text text-danger"></div>
+                                    </div>
+                                    <div id="msg" class="form-text text-danger"></div>  
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row2">
-                        <div class="row-title">
-                            <h5>Danh sách báo chí</h5>
-                            <p>Dịch vụ đặt mua báo chí online</p>
-                        </div>
-                        <div class="magazine-list">
-                            <div class="container">
-                                <!-- Dòng 1 -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp1.html"><img src="../img/baoHaNoiMoi.png"></a>
-                                            <a href="sp1.html" class="nav-link" id="name-bao">
-                                                <p>Báo Hà Nội Mới - 5/4/2025</p>
-                                            </a>
-                                            <p>Tình trạng: Còn hàng</p> 
-                                            <p>Giá: 4.200đ</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp2.html"><img src="../img/baoTuoiTre.png"></a>
-                                            <a href="sp2.html" class="nav-link" id="name-bao">
-                                                <p>Báo tuổi trẻ - 5/4/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Còn hàng</p>
-                                                <p>Giá: 3.300đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp3.html"><img src="../img/baoQDND.png"></a>
-                                            <a href="sp3.html" class="nav-link" id="name-bao">
-                                                <p>Báo Quân đội nhân dân - 3/4/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Còn hàng</p>
-                                                <p>Giá: 3.800đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Dòng 2 -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link disabled" id="bao1" href="#"><img src="../img/bao4.png"></a>
-                                            <a href="#" class="nav-link disabled" id="name-bao">
-                                                <p>Báo Thời Nay - 2/4/2025</p>
-                                            </a>
-                                            <p>Tình trạng: Hết hàng</p> 
-                                            <p>Giá: 4.300đ</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link disabled" id="bao1" href="#"><img src="../img/bao5.png"></a>
-                                            <a href="#" class="nav-link disabled" id="name-bao">
-                                                <p>Báo An Ninh - 1/4/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Hết hàng</p>
-                                                <p>Giá: 4.800đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp7.html"><img src="../img/bao6.png"></a>
-                                            <a href="sp7.html" class="nav-link" id="name-bao">
-                                                <p>Báo Quân đội nhân dân - 31/3/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Còn hàng</p>
-                                                <p>Giá: 3.800đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Dòng 3 -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp8.html"><img src="../img/bao7.png"></a>
-                                            <a href="sp8.html" class="nav-link" id="name-bao">
-                                                <p>Báo Pháp Luật - 31/3/2025</p>
-                                            </a>
-                                            <p>Tình trạng: Còn hàng</p> 
-                                            <p>Giá: 3.900đ</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link" id="bao1" href="sp9.html"><img src="../img/bao8.png"></a>
-                                            <a href="sp9.html" class="nav-link" id="name-bao">
-                                                <p>Báo pháp Luật - 29/3/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Còn hàng</p>
-                                                <p>Giá: 3.800đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="col-item">
-                                            <a class="nav-link disabled" id="bao1" href="#"><img src="../img/bao9.png"></a>
-                                            <a href="#" class="nav-link disabled" id="name-bao">
-                                                <p>Báo bóng đá - 26/3/2025</p>
-                                            </a>
-                                            <div class="status">
-                                                <p>Tình trạng: Hết hàng</p>
-                                                <p>Giá: 4.300đ</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="order()" class="btn btn-primary">Xác nhận</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                function closeModal(){
+                    document.getElementById("name").value = "";
+                    document.getElementById("address").value = "";
+                    document.getElementById("numphone").value = "";
+                    document.getElementById("nameError").textContent = "";
+                    document.getElementById("addressError").textContent = "";
+                    document.getElementById("numphoneError").textContent = "";
+                    document.getElementById("");
+                    document.getElementById("msg").textContent = "";
+                }
+                function order(){
+                    const name = document.getElementById("name");
+                    const address = document.getElementById("address");
+                    const numphone = document.getElementById("numphone");
+                    const msg = document.getElementById("msg");
+                    const nameText = name.value.trim();
+                    const addressText = address.value.trim();
+                    const numphoneText = numphone.value.trim();
+                    const nameError = document.getElementById("nameError");
+                    const addressError = document.getElementById("addressError");
+                    const numphoneError = document.getElementById("numphoneError");
+                    const nameRegex = /^[A-Za-zÀ-Ỹà-ỹ\s]+$/;
+                    const addressRegex = /^[0-9]+[\/0-9\s]*[A-Za-zÀ-Ỹà-ỹ\s]+$/
+                    const numphoneRegex = /^\d{10}$/;
+                    let valid = true;
+                    if(!nameRegex.test(nameText)){
+                        nameError.textContent = 'Họ tên không hợp lệ';
+                        valid = false;
+                    }
+                    else{
+                        nameError.textContent = "";
+                    }
+                    if(!addressRegex.test(addressText)){
+                        addressError.textContent = "Địa chỉ không hợp lệ";
+                        valid = false
+                    }
+                    else{
+                        addressError.textContent = "";
+                    }
+                    if(!numphoneRegex.test(numphoneText)){
+                        valid = false;
+                        numphoneError.textContent = "Số điện thoại không hợp lệ";
+                    }
+                    else{
+                        numphoneError.textContent = "";
+                    }
+                    if(nameText == "" || addressText =="" || numphoneText == ""){
+                        valid = false;
+                        msg.textContent = "Hãy nhập đầy đủ thông tin";
+                    }
+                    else{
+                        msg.textContent = "";
+                    }
+                    if(valid){
+                        name.value = "";
+                        address.value = "";
+                        numphone.value = "";
+                        alert("Bạn đã đặt hàng thành công !");
+                        $("#order-modal").modal('hide');
+                        localStorage.removeItem("cart");
+                        document.getElementById("order-message").innerHTML = "🎉 Đặt hàng thành công! Cảm ơn bạn đã mua sắm.";
+                        showCart();
+                    }
+                }
+                function showCart() {
+                    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const container = document.getElementById("cart-list");
+                    container.innerHTML = "";
+                    cart.forEach(product => {
+                        const item = document.createElement("div");
+                        item.innerHTML = `
+                        <div style="text-align: center; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <img src="${product.image}" alt="${product.name}" width="150" height="200" style="object-fit: cover; border: 1px solid #ccc;" />
+                            <div>
+                            <p><strong>${product.name}</strong></p>
+                            <p>Giá: ${product.quantity} x ${product.price.toLocaleString()}đ</p>
+                            </div>
+                        </div>
+                        `;
+                        container.appendChild(item);
+                    });
+                }
+                function orderCart(){
+                    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const message = document.getElementById("order-message");
+                    if (cart.length === 0) {
+                        message.style.color = "gray";
+                        message.textContent = "🛒 Giỏ hàng hiện đang rỗng";
+                    } 
+                    else {
+                        const modal = new bootstrap.Modal(document.getElementById("order-modal"));
+                        modal.show();
+                    }
+                }
+            </script>
+
+            
             <div class="supplier">
                 <div class="supplier-form">
                     <div class="header">

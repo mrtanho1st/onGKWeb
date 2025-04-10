@@ -181,6 +181,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">LIÊN HỆ</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shoppingCart.html">GIỎ HÀNG</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SẢN PHẨM</a>
                             <div class="dropdown-menu" aria-labelledby="dropdownId">
@@ -220,12 +223,49 @@
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#order">
     Đặt Hàng
 </button>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-cart">
+    Thêm vào giỏ
+</button>
 </div>
 </div>
 </div>
 </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="add-cart" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Thêm vào giỏ hàng</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<div class="form-group">
+<div class="row">
+    <div class="col-6">
+        <img src="../img/baoQDND.png">
+    </div>
+    <div class="col-6">
+        <h3>Báo Quân Đội Nhân Dân - 1/4/2025</h3>
+        <p>Mã sản phẩm: 2080</p>
+        <p>Tình trạng: Còn hàng</p>
+        <p>Kỳ xuất bản: Chủ Nhật</p>
+        <p>Giá: 3.800đ</p>
+    </div>
+</div>
+<input type="number" name="quantity" id="quantity" class="form-control mt-2" placeholder="Số lượng">
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="button" onclick="addCart()" class="btn btn-primary">Xác nhận</button>
+</div>
+</div>
+</div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -270,6 +310,29 @@
 </div>
 </div>
 <script>
+function addCart(){
+const inputQuantity = document.getElementById("quantity").value;
+const product = {
+id: "2080",
+name: "Báo Quân Đội Nhân Dân - 1/4/2025",
+price: 3800,
+quantity: 0,
+image: "../img/baoQDND.png"
+};
+product.quantity = parseInt(inputQuantity);
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const exist = cart.find(item => item.id === product.id);
+if(exist){
+exist.quantity += product.quantity;
+}
+else{
+cart.push(product);
+}
+localStorage.setItem("cart", JSON.stringify(cart));
+$("#add-cart").modal("hide");
+alert("Đã thêm " + product.quantity + " sản phẩm vào giỏ hàng thành công");
+document.getElementById("quantity").value = "1";
+}
 function closeModal(){
 document.getElementById("name").value = "";
 document.getElementById("address").value = "";
@@ -285,7 +348,7 @@ function order(){
 const name = document.getElementById("name");
 const address = document.getElementById("address");
 const numphone = document.getElementById("numphone");
-const quantily = document.getElementById("quantity");
+const quantity = document.getElementById("quantity");
 const msg = document.getElementById("msg");
 const nameText = name.value.trim();
 const addressText = address.value.trim();
@@ -322,7 +385,7 @@ alert("Bạn đã đặt hàng thành công !");
 name.value = "";
 address.value = "";
 numphone.value = "";
-quantily.value = "1";
+quantity.value = "1";
 msg.textContent = "";
 $("#order").modal("hide");
 }
