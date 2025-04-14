@@ -163,7 +163,7 @@
                     <img src="../img/item1.png">
                 </div>
                 <div class="content-represent">
-                    <div id="cart-list">
+                    <div class="row" id="cart-list">
 
                     </div>
                     <div id="order-message" style="margin-top: 10px; color: green;"></div>       
@@ -529,7 +529,7 @@
             cart.forEach(product => {
                 const item = document.createElement("div");
                 item.innerHTML = `
-                <div style="text-align: center; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <div class="col mt-3" style="text-align: center; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <img src="${product.image}" alt="${product.name}" width="150" height="200" style="object-fit: cover; border: 1px solid #ccc;" />
                     <div>
                     <p><strong>${product.name}</strong></p>

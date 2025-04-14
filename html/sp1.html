@@ -409,11 +409,11 @@
                 function addCart(){
                     const inputQuantity = document.getElementById("quantity").value;
                     const product = {
-                        id: "3330",
-                        name: "Việt Nam - hòa cùng dòng chảy thời đại",
-                        price: 9800,
+                        id: "3060",
+                        name: "Báo Hà Nội Mới - 5/4/2025",
+                        price: 4200,
                         quantity: 0,
-                        image: "../img/magazine9.png"
+                        image: "../img/baoHaNoiMoi.png"
                     };
                     product.quantity = parseInt(inputQuantity);
                     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -494,7 +494,7 @@
                         user.numphone = numphone.value;
                         $("#order").modal("hide");
                         const totalQuantity = parseInt(quantity);
-                        const totalPrice = totalQuantity * 9800;
+                        const totalPrice = totalQuantity * 4200;
                         issueInvoice(user, totalPrice, totalQuantity);                 
                         name.value = "";
                         address.value = "";
@@ -515,7 +515,7 @@
                     name.innerHTML = "Khách hàng: " + users.name;
                     address.innerHTML = "Địa chỉ: " + users.address;
                     numphone.innerHTML = "Số điện thoại: " + users.numphone;
-                    product.innerHTML = "Tên sản phẩm: Việt Nam - hòa cùng dòng chảy thời đại"; 
+                    product.innerHTML = "Tên sản phẩm: Báo Hà Nội Mới - 5/4/2025"; 
                     quantity.innerHTML = "Số lượng đơn hàng: " + totalQuantity;
                     price.innerHTML = "Tổng giá trị đơn hàng: " + totalPrice.toLocaleString("vi-VN") + "đ";
                     const modal = new bootstrap.Modal(document.getElementById("invoice"));

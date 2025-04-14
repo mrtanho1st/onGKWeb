@@ -160,3 +160,7 @@ footer{
     height: 30px;
     width: 500px;
 }
+#cart-list{
+    width: 90%;
+    margin-left: 100px;
+}
