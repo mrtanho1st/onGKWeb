@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/contact.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="induction">
+                <div class="mail">
+                    <img src="../img/mail.png">
+                    <p>tan2005tg@gmail.com</p>
+                </div>
+                <div class="numphone">
+                    <img src="../img/phone.png">
+                    <p>034 9099 412</p>
+                </div>
+                <div id="enter">
+                    <button type="button" class="btn-outline-success" data-toggle="modal" data-target="#login">
+                        Đăng nhập
+                    </button>
+                </div>
+                <div id="signin">
+                    <button type="button" class="btn-outline-success" data-toggle="modal" data-target="#register">
+                        Đăng ký
+                    </button>
+                </div>
+                <div id="dashboard">
+                    <div id="wecome">
+                        <h3>Welcome: <span id="welcome-user">!</span></h3>
+                    </div>
+                    <div id="dashboard-btn">
+                        <button onclick="logout()" class="btn-outline-warning">Đăng xuất</button>
+                    </div>
+                </div>
+            </div>
+            <!-- login -->
+            <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                    <h5 class="modal-title">Đăng nhập tài khoản</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="text" id="log-username" class="form-control mb-3" placeholder="Tên đăng nhập">
+                                </div>
+                                <div class="row">
+                                    <input type="password" id="log-password" class="form-control mb-3" placeholder="Mật khẩu">
+                                </div>
+                                <p id="log-msg" class="mt-3"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button onclick="login()" class="btn btn-primary">Đăng nhập</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- register -->
+            <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title text-primary">Đăng ký tài khoản</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                            </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <h5>Nhập tên tài khoản và mật khẩu</h5>
+                            <input type="text" id="reg-username" class="form-control mt-3" placeholder="Tên đăng nhập">
+                            <input type="password" id="reg-password" class="form-control mt-3" placeholder="Mật khẩu">
+                            <div id="password-error" class="text-danger"></div>
+                            <input type="password" id="reg-repassword" class="form-control mt-3" placeholder="Nhập lại mật khẩu">
+                            <div id="repassword-error" class="text-danger"></div>
+                            <h5 class="mt-3">Nhập thông tin cá nhân</h5>
+                            <input type="text" id="reg-name" class="form-control mt-3" placeholder="Họ tên người nhận">
+                            <input type="email" id="reg-email" class="form-control mt-3" placeholder="Địa chỉ email">
+                            <div id="email-error" class="text-danger"></div>
+                            <input type="text" id="reg-numphone" class="form-control mt-3" placeholder="Số điện thoại">
+                            <div id="numphone-error" class="text-danger"></div>
+                            <input type="text" id="reg-address" class="form-control mt-3" placeholder="Địa chỉ nhận hàng">
+                            <div id="address-error" class="text-danger"></div>
+                            <p id="register-msg" class="mt-3"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button onclick="register()" class="btn btn-primary">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <script>
+                function register(){
+                    const username = document.getElementById("reg-username").value.trim();
+                    const password = document.getElementById("reg-password").value.trim();
+                    const repassword = document.getElementById("reg-repassword").value.trim();
+                    const address = document.getElementById("reg-address").value.trim();
+                    const email = document.getElementById("reg-email").value.trim();
+                    const numphone = document.getElementById("reg-numphone").value.trim();
+                    const msg = document.getElementById("register-msg");
+                    const name = document.getElementById("reg-name").value.trim();
+                    const regexNumPhone = /^(03|05|07|08|09)\d{8}$/;
+                    const regexPassword = /^.{6,}$/
+                    const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    const addressRegex = /^[0-9]+[\/0-9\s]*.*$/
+                    const passwordError = document.getElementById("password-error");
+                    const repasswordError = document.getElementById("repassword-error");
+                    const emailError = document.getElementById("email-error");
+                    const numphoneError = document.getElementById("numphone-error");
+                    const addressError = document.getElementById("address-error");
+                    let valid = true;
+                    if (!username || !password || !repassword || !email || !numphone || !name) {
+                        msg.innerHTML = '<span class="text-danger">Vui lòng nhập đầy đủ thông tin!</span>';
+                        valid = false;
+                    }
+                    else{
+                        msg.innerHTML = "";
+                    }
+                    if( password != repassword){
+                        repasswordError.textContent = 'Mật khẩu nhập lại khác nhau!';
+                        valid = false;
+                    }
+                    else{
+                        repasswordError.textContent = "";
+                    }
+                    if(!regexNumPhone.test(numphone)){
+                        numphoneError.textContent = 'Số điện thoại nhập vào không đúng định dạng';
+                        valid = false;
+                    }
+                    else{
+                        numphoneError.textContent = "";
+                    }
+                    if(!regexPassword.test(password)){
+                        passwordError.textContent = 'Mật khẩu nhập vào phải trên 5 kí tự';
+                        valid = false;
+                    }
+                    else{
+                        passwordError.textContent = "";
+                    }
+                    if(!regexEmail.test(email)){
+                        emailError.textContent = 'Email không hợp lệ!';
+                        valid = false;
+                    }
+                    else{
+                        emailError.textContent = "";
+                    }
+                    if(!addressRegex.test(address)){
+                        addressError.textContent = 'Địa chỉ không hợp lệ!';
+                        valid = false;
+                    }
+                    else{
+                        addressError.textContent = "";
+                    }
+                    let users = JSON.parse(localStorage.getItem("users")) || [];
+                    const exists = users.find(u => u.username === username);
+                    if(exists){
+                        msg.innerHTML = '<span class="text-danger">Tài khoản đã tồn tại!</span>';
+                        valid = false;
+                    }
+                    if(valid){
+                        const account = {
+                        username : "empty",
+                        password : "empty",
+                        numphone : 1,
+                        name : "empty",
+                        email : "empty",
+                        address: "empty"
+                        };
+                        account.username = username;
+                        account.name = name;
+                        account.password = password;
+                        account.email = email;
+                        account.numphone = numphone;
+                        account.address = address;
+                        users.push(account);
+                        localStorage.setItem("users", JSON.stringify(users));
+                        msg.innerHTML = '<span class="text-success">Đăng ký tài khoản thành công!</span>';
+                        document.getElementById("reg-username").value = "";
+                        document.getElementById("reg-password").value = "";
+                        document.getElementById("reg-repassword").value = "";
+                        document.getElementById("reg-numphone").value = "";
+                        document.getElementById("reg-email").value = "";
+                        document.getElementById("reg-name").value = "";
+                        document.getElementById("reg-address").value = "";
+                    }
+                }
+                function login(){
+                    const username = document.getElementById("log-username").value.trim();
+                    const password = document.getElementById("log-password").value.trim();
+                    const msg = document.getElementById("log-msg");
+                    if(!username || !password){
+                        msg.innerHTML = '<span class="text-danger">Vui Lòng nhập đầy đủ thông tin!</span>';
+                        return;
+                    }
+                    let users = JSON.parse(localStorage.getItem("users")) || [];
+                    const validUser = users.find(u => u.username === username && u.password === password);
+                    if(validUser){
+                        localStorage.setItem("loggedInUser", username);
+                        alert("Đăng nhập thành công!");
+                        $("#login").modal('hide');
+                        showDashboard(username);
+                        document.getElementById("log-username").value = "";
+                        document.getElementById("log-password").value = "";
+                    }
+                    else{
+                        msg.innerHTML = '<span class="text-danger">Sai tên đăng nhập hoặc mật khẩu!</span>';
+                        document.getElementById("log-password").value = "";
+                    }
+                }
+                function showDashboard(username){
+                    document.getElementById("enter").style.display = "none";
+                    document.getElementById("signin").style.display = "none";
+                    document.getElementById("dashboard").style.display = "block";
+                    document.getElementById("welcome-user").textContent = username;
+                }
+                function logout(){
+                    localStorage.removeItem("loggedInUser");
+                    location.reload();
+                }
+                window.onload = function(){
+                    const loggedInUser = localStorage.getItem("loggedInUser");
+                    if(loggedInUser){
+                        showDashboard(loggedInUser);
+                    }
+                };
+            </script>
+
+            <nav class="navbar navbar-expand-sm navbar-dark">
+                <a class="navbar-brand" href="../html/home.html"><img src="../img/logo.png" alt=""></a>
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                    aria-expanded="false" aria-label="Toggle navigation"></button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">    
+                            <a class="nav-link" href="../html/home.html">TRANG CHỦ<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="introduce.html" class="nav-link">GIỚI THIỆU</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">LIÊN HỆ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shoppingCart.html">GIỎ HÀNG</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SẢN PHẨM</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownId">
+                                <a class="dropdown-item" href="news.html">Báo chí</a>
+                                <a class="dropdown-item" href="magazine.html">Tạp chí</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container-fluid">
+            <div class="backGround">
+                <img src="../img/anhNen.webp" class="img-fluid w-100" alt="Ảnh full width">
+            </div>
+            <div class="content">
+                <div class="content-title">
+                    <h2>CÔNG TY PHÁT HÀNH BÁO CHÍ SÀI GÒN NEWS</h2>
+                    <img src="../img/item1.png">
+                </div>
+                <div class="content-represent">
+                    <p>Trụ sở chính: Số 128 Nguyễn Văn Bảo, Quận Gò Vấp, TP. Hồ Chí Minh</p>
+                    <p>Tại Miền Nam: Số 43 Hồ Văn Huê, Quận Phú Nhuận, TP. Hồ Chí Minh</p>
+                    <p> Tại miền Bắc: Số 17 Đinh Lễ, Phường Tràng Tiền, Quận Hoàn Kiếm, TP. Hà Nội</p>   
+                    <p>Tại miền Trung: Số 377 Nguyễn Văn Linh, P.Thạc Gián, Quận Hải Châu, TP. Đà Nẵng</p> 
+                </div>
+            </div>
+            <div class="supplier">
+                <div class="supplier-form">
+                    <div class="header">
+                        <h5>ĐỐI TÁC TIÊU BIỂU</h5>
+                        <img src="../img/item1.png">
+                    </div>
+                    <nav class="nav justify-content-center">
+                    
+                      <a class="nav-link" id="bao" href="https://hanoimoi.vn/"><img src="../img/baoHN.png"></a>
+                      <a class="nav-link" id="bao" href="https://ems.com.vn/"><img src="../img/baoEMS.png"></a>
+                      <a class="nav-link" id="bao" href="https://nhandan.vn/"><img src="../img/baoND.png"></a>
+                      <a class="nav-link" id="bao" href="https://thanhnien.vn/"><img src="../img/baoTN.png"></a>
+                      <a class="nav-link" id="bao" href="https://tienphong.vn/"><img src="../img/baoTP.png"></a>
+                      <a class="nav-link" id="bao" href="https://dantri.com.vn/"><img src="../img/baoDT.png"></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-dark pt-4">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <h5>Giới thiệu chung</h5>
+                  <p>Trụ sở công ty: 66 Nhiêu Tứ phường 7 quận Phú Nhuận.</p>
+                  <p>Ngành nghề kinh doanh: phát hành báo chí và tạp chí - Bán buôn, bán lẻ, đại lý báo chí.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <h5>Quy trình - Chính sách</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark">Chính sách thanh toán</a></li>
+                    <li><a href="#" class="text-dark">Chính sách vận chuyển</a></li>
+                    <li><a href="#" class="text-dark">Chính sách đổi trả</a></li>
+                    <li><a href="#" class="text-dark">Chính sách bảo hành</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <h5>Địa chỉ liên hệ</h5>
+                  <p>Email: tan2005tg@gmail.com</p>
+                  <p>Phone: 034 9099 412</p>
+                </div>
+              </div>
+              <nav class="nav justify-content-center">
+                <a class="nav-link" href="#"><img src="../img/fb.png"></a>
+                <a class="nav-link" href="#"><img src="../img/gmail.webp"></a>
+                <a class="nav-link" href="#"><img src="../img/zl.webp"></a>
+                <a class="nav-link" href="#"><img src="../img/twitter.png"></a>
+              </nav>
+              <div class="text-center py-3 border-top">
+                ©2025 Thiết kế bởi Lê Minh Tân
+              </div>
+            </div>
+          </footer>
+          
+          
+    </div>
+</body>
+</html>

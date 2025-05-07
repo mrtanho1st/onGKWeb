@@ -1,0 +1,140 @@
+header{
+    background-color: azure;
+    height: 126px;
+}
+footer{
+    height: 300px;
+    background-color: orange;
+}
+.induction{
+    height: 40px;
+    background-color: whitesmoke;
+}
+.mail{
+    margin-top: 5px;
+    margin-left: 100px;
+    height: 20px;
+    width: 200px;
+    float: left;
+    display: flex;
+}
+.numphone{
+    margin-top: 5px;
+    margin-left: 20px;
+    height: 20px;
+    width: 200px;
+    float: left;
+    display: flex;
+}
+#enter{
+    margin-top: 5px;
+    height: 30px;
+    width: 100px;
+    float: right;
+    text-align: center;
+    margin-right: 100px;
+}
+#signin{
+    margin-top: 5px;
+    height: 30px;
+    width: 100px;
+    float: right;
+    text-align: center;
+    margin-right: 30px;
+}
+.navbar-brand img{
+    height: 60px;
+    width:  100px;
+}
+.list-unstyled li:hover a{
+    text-decoration: none;
+    font-weight: bold;
+}
+.list-unstyled li:hover{
+    background-color: white;
+}
+.nav .nav-link img{
+    height: 30px;
+    width: 30px;
+}
+.nav .nav-link:hover{
+    background-color: gray;
+}
+.supplier{
+    text-align: center;
+    height: 350px;
+    background-color: white;
+}
+.nav #bao img{
+    height: 100px;
+    width: 150px;
+    border: 1px solid black;
+}
+.supplier-form{
+    position: relative;
+    top: 50px;
+    height: 250px;
+}
+.supplier-form .header{
+    height: 120px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.supplier-form .header h5{
+    padding-top: 30px;
+    font-size: 25px;
+}
+.supplier-form .header h5:hover{
+    color: orange;
+}
+.content{
+    position: relative;
+    z-index: 10;
+    height: 800px;
+    background-color: white;
+}
+.content-represent{
+    font-size: 16px;
+    position: relative;
+    top: 100px;
+    margin-left: 400px;
+    width: 900px;
+    height: 550px;
+    text-align: left;
+}
+.content-title{
+    position: relative;
+    top: 50px;
+    background-color: white;
+    text-align: center;
+}
+
+.navbar{
+    background-color: orange;
+}
+.content-title h2:hover{
+    color: orange;
+}
+.backGround{
+    height: 200px;
+    position: relative;
+    z-index: 1;
+}
+#dashboard{
+    text-align: center;
+    margin-top: 5px;
+    height: 30px;
+    width: 600px;
+    float: right;
+    margin-right: 50px;
+    display: none;
+}
+#dashboard-btn{
+    height: 30px;
+    width: 100px;
+    float: right;
+}
+#wecome{
+    float: left;
+    height: 30px;
+    width: 500px;
+}

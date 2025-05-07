@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Hà Nội Mới</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/sp.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="induction">
+                <div class="mail">
+                    <img src="../img/mail.png">
+                    <p>tan2005tg@gmail.com</p>
+                </div>
+                <div class="numphone">
+                    <img src="../img/phone.png">
+                    <p>034 9099 412</p>
+                </div>
+                <div id="enter">
+                    <button type="button" class="btn-outline-success" data-toggle="modal" data-target="#login">
+                        Đăng nhập
+                    </button>
+                </div>
+                <div id="signin">
+                    <button type="button" class="btn-outline-success" data-toggle="modal" data-target="#register">
+                        Đăng ký
+                    </button>
+                </div>
+                <div id="dashboard">
+                    <div id="wecome">
+                        <h3>Welcome: <span id="welcome-user">!</span></h3>
+                    </div>
+                    <div id="dashboard-btn">
+                        <button onclick="logout()" class="btn-outline-warning">Đăng xuất</button>
+                    </div>
+                </div>
+            </div>
+            <!-- login -->
+            <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                    <h5 class="modal-title">Đăng nhập tài khoản</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="text" id="log-username" class="form-control mb-3" placeholder="Tên đăng nhập">
+                                </div>
+                                <div class="row">
+                                    <input type="password" id="log-password" class="form-control mb-3" placeholder="Mật khẩu">
+                                </div>
+                                <p id="log-msg" class="mt-3"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button onclick="login()" class="btn btn-primary">Đăng nhập</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- register -->
+            <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                    <h5 class="modal-title">Đăng ký tài khoản</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="text" id="reg-username" class="form-control mb-3" placeholder="Tên đăng nhập">
+                                </div>
+                                <div class="row">
+                                    <input type="password" id="reg-password" class="form-control mb-3" placeholder="Mật khẩu">
+                                </div>
+                                <div class="row">
+                                    <input type="password" id="reg-repassword" class="form-control mb-3" placeholder="Nhập lại mật khẩu">
+                                </div>
+                                <div class="row">
+                                    <h5>Nhập thông tin cá nhân</h5>
+                                </div>
+                                <div class="row mt-2">
+                                    <input type="text" id="reg-name" class="form-control mb-3" placeholder="Họ tên người nhận">
+                                </div>
+                                <div class="row mt-2">
+                                    <input type="email" id="reg-email" class="form-control mb-3" placeholder="Địa chỉ email">
+                                </div>
+                                <div class="row">
+                                    <input type="text" id="reg-numphone" class="form-control mb-3" placeholder="Số điện thoại">
+                                </div>
+                                <div class="row">
+                                    <input type="text" id="reg-address" class="form-control mb-3" placeholder="Địa chỉ nhận hàng">
+                                </div>
+                                <p id="register-msg" class="mt-3"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button onclick="register()" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                function register(){
+                    const username = document.getElementById("reg-username").value.trim();
+                    const password = document.getElementById("reg-password").value.trim();
+                    const repassword = document.getElementById("reg-repassword").value.trim();
+                    const address = document.getElementById("reg-address").value.trim();
+                    const email = document.getElementById("reg-email").value.trim();
+                    const numphone = document.getElementById("reg-numphone").value.trim();
+                    const msg = document.getElementById("register-msg");
+                    const name = document.getElementById("reg-name").value.trim();
+                    const regexNumPhone = /^(03|05|07|08|09)\d{8}$/;
+                    const regexPassword = /^.{6,}$/
+                    const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    const addressRegex = /^[0-9]+[\/0-9\s]*.*$/
+                    if (!username || !password || !repassword || !email || !numphone || !name) {
+                        msg.innerHTML = '<span class="text-danger">Vui lòng nhập đầy đủ thông tin!</span>';
+                        return;
+                    }
+                    else if(password != repassword){
+                        msg.innerHTML = '<span class="text-danger">Mật khẩu nhập lại khác nhau!</span>';
+                        return;
+                    }
+                    else if(!regexNumPhone.test(numphone)){
+                        msg.innerHTML = '<span class="text-danger">Số điện thoại nhập vào không đúng định dạng</span>';
+                        return;
+                    }
+                    else if(!regexPassword.test(password)){
+                        msg.innerHTML = '<span class="text-danger">Mật khẩu nhập vào phải trên 5 kí tự</span>';
+                        return;
+                    }
+                    else if(!regexEmail.test(email)){
+                        msg.innerHTML = '<span class="text-danger">Email không hợp lệ!</span>';
+                        return;
+                    }
+                    else if(!addressRegex.test(address)){
+                        msg.innerHTML = '<span class="text-danger">Địa chỉ không hợp lệ!</span>';
+                        return;
+                    }
+                    let users = JSON.parse(localStorage.getItem("users")) || [];
+                    const exists = users.find(u => u.username === username);
+                    if(exists){
+                        msg.innerHTML = '<span class="text-danger">Tài khoản đã tồn tại!</span>';
+                        return;
+                    }
+                    const account = {
+                        username : "empty",
+                        password : "empty",
+                        numphone : 1,
+                        name : "empty",
+                        email : "empty",
+                        address: "empty"
+                    };
+                    account.username = username;
+                    account.name = name;
+                    account.password = password;
+                    account.email = email;
+                    account.numphone = numphone;
+                    account.address = address;
+                    users.push(account);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    msg.innerHTML = '<span class="text-success">Đăng ký tài khoản thành công!</span>';
+                    document.getElementById("reg-username").value = "";
+                    document.getElementById("reg-password").value = "";
+                    document.getElementById("reg-repassword").value = "";
+                    document.getElementById("reg-numphone").value = "";
+                    document.getElementById("reg-email").value = "";
+                    document.getElementById("reg-name").value = "";
+                    document.getElementById("reg-address").value = "";
+                }
+                function login(){
+                    const username = document.getElementById("log-username").value.trim();
+                    const password = document.getElementById("log-password").value.trim();
+                    const msg = document.getElementById("log-msg");
+                    if(!username || !password){
+                        msg.innerHTML = '<span class="text-danger">Vui Lòng nhập đầy đủ thông tin!</span>';
+                        return;
+                    }
+                    let users = JSON.parse(localStorage.getItem("users")) || [];
+                    const validUser = users.find(u => u.username === username && u.password === password);
+                    if(validUser){
+                        localStorage.setItem("loggedInUser", username);
+                        alert("Đăng nhập thành công!");
+                        $("#login").modal('hide');
+                        showDashboard(username);
+                        document.getElementById("log-username").value = "";
+                        document.getElementById("log-password").value = "";
+                    }
+                    else{
+                        msg.innerHTML = '<span class="text-danger">Sai tên đăng nhập hoặc mật khẩu!</span>';
+                        document.getElementById("log-password").value = "";
+                    }
+                }
+                function showDashboard(username){
+                    document.getElementById("enter").style.display = "none";
+                    document.getElementById("signin").style.display = "none";
+                    document.getElementById("dashboard").style.display = "block";
+                    document.getElementById("welcome-user").textContent = username;
+                }
+                function logout(){
+                    localStorage.removeItem("loggedInUser");
+                    location.reload();
+                }
+                window.onload = function(){
+                    const loggedInUser = localStorage.getItem("loggedInUser");
+                    if(loggedInUser){
+                        showDashboard(loggedInUser);
+                    }
+                };
+            </script>
+
+            <nav class="navbar navbar-expand-sm navbar-dark">
+                <a class="navbar-brand" href="../html/home.html"><img src="../img/logo.png" alt=""></a>
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                    aria-expanded="false" aria-label="Toggle navigation"></button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">    
+                            <a class="nav-link" href="../html/home.html">TRANG CHỦ<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="introduce.html" class="nav-link">GIỚI THIỆU</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">LIÊN HỆ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shoppingCart.html">GIỎ HÀNG</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SẢN PHẨM</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownId">
+                                <a class="dropdown-item" href="news.html">Báo chí</a>
+                                <a class="dropdown-item" href="magazine.html">Tạp chí</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container-fluid">
+            <div class="backGround">
+                <img src="../img/anhNen.webp" class="img-fluid w-100" alt="Ảnh full width">
+            </div>
+            <div class="content">
+                <div class="content-title">
+                    <h2>Báo Hà Nội Mới</h2>
+                    <img src="../img/item1.png">
+                </div>
+                <div class="content-represent">
+                    <div class="item">
+                        <a class="nav-link" href="#"><img src="../img/baoHaNoiMoi.png"></a>
+                        <div class="item-text">
+                            <div class="item-form">
+                                <h3>Báo Hà Nội Mới - 5/4/2025</h3>
+                                <p>Mã sản phẩm: 3060</p>
+                                <p>Tình trạng: Còn hàng</p>
+                                <p>Kỳ xuất bản: Chủ Nhật</p>
+                                <p>Giá: 4.200đ</p>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#order">
+                                    Đặt Hàng
+                                </button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-cart">
+                                    Thêm vào giỏ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="add-cart" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm vào giỏ hàng</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img src="../img/baoHaNoiMoi.png">
+                                    </div>
+                                    <div class="col-6">
+                                        <h3>Báo Hà Nội Mới - 5/4/2025</h3>
+                                        <p>Mã sản phẩm: 3060</p>
+                                        <p>Tình trạng: Còn hàng</p>
+                                        <p>Kỳ xuất bản: Chủ Nhật</p>
+                                        <p>Giá: 4.200đ</p>
+                                    </div>
+                                </div>
+                                <input type="number" name="quantity" id="quantity" class="form-control mt-2" placeholder="Số lượng">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="addCart()" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Điền thông tin cá nhân</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="name" id="order-name" placeholder="Nhập họ tên">
+                                        <div id="nameError" class="form-text text-danger"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="address" id="order-address" placeholder="Nhập địa chỉ">
+                                        <div id="addressError" class="form-text text-danger"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" name="numphone" id="order-numphone" placeholder="Nhập số điện thoại">
+                                        <div id="numphoneError" class="form-text text-danger"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="quantity" class="form-label">Số lượng:</label>
+                                        <input type="number" class="form-control" id="order-quantity" name="quantity" value="1" min="1" max="99">
+                                    </div>
+                                    <div id="msg" class="form-text text-danger"></div>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="order()" class="btn btn-primary">Đặt hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="invoice" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Hóa đơn</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row ml-3 mt-2" id="invoice-name">
+                                
+                            </div>
+                            <div class="row ml-3 mt-2" id="invoice-address">
+                                
+                            </div>
+                            <div class="row ml-3 mt-2" id="invoice-numphone">
+                                
+                            </div>
+                            <div class="row ml-3 mt-2" id="invoice-product">
+
+                            </div>
+                            <div class="row ml-3 mt-2" id="invoice-quantity">
+
+                            </div>
+                            <div class="row ml-3 mt-2" id="invoice-price">
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function addCart(){
+                    const inputQuantity = document.getElementById("quantity").value;
+                    const product = {
+                        id: "3060",
+                        name: "Báo Hà Nội Mới - 5/4/2025",
+                        price: 4200,
+                        quantity: 0,
+                        image: "../img/baoHaNoiMoi.png"
+                    };
+                    product.quantity = parseInt(inputQuantity);
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const exist = cart.find(item => item.id === product.id);
+                    if(exist){
+                        exist.quantity += product.quantity;
+                    }
+                    else{
+                        cart.push(product);
+                    }
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    $("#add-cart").modal("hide");
+                    alert("Đã thêm " + product.quantity + " sản phẩm vào giỏ hàng thành công");
+                    document.getElementById("quantity").value = "1";
+                }
+                function closeModal(){
+                    document.getElementById("order-name").value = "";
+                    document.getElementById("order-address").value = "";
+                    document.getElementById("oder-numphone").value = "";
+                    document.getElementById("order-quantity").value = "1";
+                    document.getElementById("nameError").textContent = "";
+                    document.getElementById("addressError").textContent = "";
+                    document.getElementById("numphoneError").textContent = "";
+                    document.getElementById("msg").textContent = "";
+                }
+                function order(){
+                    const name = document.getElementById("order-name");
+                    const address = document.getElementById("order-address");
+                    const numphone = document.getElementById("order-numphone");
+                    const quantity = document.getElementById("order-quantity").value;
+                    const msg = document.getElementById("msg");
+                    const nameText = name.value.trim();
+                    const addressText = address.value.trim();
+                    const numphoneText = numphone.value.trim();
+                    const nameError = document.getElementById("nameError");
+                    const addressError = document.getElementById("addressError");
+                    const numphoneError = document.getElementById("numphoneError");
+                    const nameRegex = /^[A-Za-zÀ-Ỹà-ỹ\s]+$/;
+                    const addressRegex = /^[0-9]+[\/0-9\s]*[A-Za-zÀ-Ỹà-ỹ\s]+.*$/
+                    const numphoneRegex = /^\d{10}$/;
+                    let valid = true;
+                    if(!nameRegex.test(nameText)){
+                        nameError.textContent = 'Họ tên không hợp lệ';
+                        valid = false;
+                    }
+                    else{
+                        nameError.textContent = "";
+                    }
+                    if(!addressRegex.test(addressText)){
+                        addressError.textContent = "Địa chỉ không hợp lệ";
+                        valid = false
+                    }
+                    else{
+                        addressError.textContent = "";
+                    }
+                    if(!numphoneRegex.test(numphoneText)){
+                        valid = false;
+                        numphoneError.textContent = "Số điện thoại không hợp lệ";
+                    }
+                    else{
+                        numphoneError.textContent = "";
+                    }
+                    if(nameText == "" || addressText =="" || numphoneText == ""){
+                        valid = false;
+                        msg.textContent = "Hãy nhập đầy đủ thông tin";
+                    }
+                    else{
+                        msg.textContent = "";
+                    }
+                    if(valid){
+                        const user = {
+                            name : "empty",
+                            address : "empty",
+                            numphone : "empty"
+                        };
+                        user.name = name.value;
+                        user.address = address.value;
+                        user.numphone = numphone.value;
+                        $("#order").modal("hide");
+                        const totalQuantity = parseInt(quantity);
+                        const totalPrice = totalQuantity * 4200;
+                        issueInvoice(user, totalPrice, totalQuantity);                 
+                        name.value = "";
+                        address.value = "";
+                        numphone.value = "";
+                        quantity.value = "1";
+                        msg.textContent = "";
+                    }
+                }
+
+                function issueInvoice(users, totalPrice, totalQuantity){
+                    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const name = document.getElementById("invoice-name");
+                    const address = document.getElementById("invoice-address");
+                    const numphone = document.getElementById("invoice-numphone");
+                    const price = document.getElementById("invoice-price");
+                    const quantity = document.getElementById("invoice-quantity");
+                    const product = document.getElementById("invoice-product");
+                    name.innerHTML = "Khách hàng: " + users.name;
+                    address.innerHTML = "Địa chỉ: " + users.address;
+                    numphone.innerHTML = "Số điện thoại: " + users.numphone;
+                    product.innerHTML = "Tên sản phẩm: Báo Hà Nội Mới - 5/4/2025"; 
+                    quantity.innerHTML = "Số lượng đơn hàng: " + totalQuantity;
+                    price.innerHTML = "Tổng giá trị đơn hàng: " + totalPrice.toLocaleString("vi-VN") + "đ";
+                    const modal = new bootstrap.Modal(document.getElementById("invoice"));
+                    modal.show();
+                };
+            </script>
+            
+            <div class="supplier">
+                <div class="supplier-form">
+                    <div class="header">
+                        <h5>ĐỐI TÁC TIÊU BIỂU</h5>
+                        <img src="../img/item1.png">
+                    </div>
+                    <nav class="nav justify-content-center">
+                    
+                      <a class="nav-link" id="bao" href="https://hanoimoi.vn/"><img src="../img/baoHN.png"></a>
+                      <a class="nav-link" id="bao" href="https://ems.com.vn/"><img src="../img/baoEMS.png"></a>
+                      <a class="nav-link" id="bao" href="https://nhandan.vn/"><img src="../img/baoND.png"></a>
+                      <a class="nav-link" id="bao" href="https://thanhnien.vn/"><img src="../img/baoTN.png"></a>
+                      <a class="nav-link" id="bao" href="https://tienphong.vn/"><img src="../img/baoTP.png"></a>
+                      <a class="nav-link" id="bao" href="https://dantri.com.vn/"><img src="../img/baoDT.png"></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-dark pt-4">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <h5>Giới thiệu chung</h5>
+                  <p>Trụ sở công ty: 66 Nhiêu Tứ phường 7 quận Phú Nhuận.</p>
+                  <p>Ngành nghề kinh doanh: phát hành báo chí và tạp chí - Bán buôn, bán lẻ, đại lý báo chí.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <h5>Quy trình - Chính sách</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark">Chính sách thanh toán</a></li>
+                    <li><a href="#" class="text-dark">Chính sách vận chuyển</a></li>
+                    <li><a href="#" class="text-dark">Chính sách đổi trả</a></li>
+                    <li><a href="#" class="text-dark">Chính sách bảo hành</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <h5>Địa chỉ liên hệ</h5>
+                  <p>Email: tan2005tg@gmail.com</p>
+                  <p>Phone: 034 9099 412</p>
+                </div>
+              </div>
+              <nav class="nav justify-content-center">
+                <a class="nav-link" href="#"><img src="../img/fb.png"></a>
+                <a class="nav-link" href="#"><img src="../img/gmail.webp"></a>
+                <a class="nav-link" href="#"><img src="../img/zl.webp"></a>
+                <a class="nav-link" href="#"><img src="../img/twitter.png"></a>
+              </nav>
+              <div class="text-center py-3 border-top">
+                ©2025 Thiết kế bởi Lê Minh Tân
+              </div>
+            </div>
+          </footer>
+          
+          
+    </div>
+</body>
+</html>
